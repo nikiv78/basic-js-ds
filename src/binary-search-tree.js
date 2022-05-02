@@ -17,45 +17,99 @@ class BinarySearchTree {
   }
 
   add(data) {
-    this.rootTree = putIn(this.rootTree, value);
-
-    function putIn(node, value) {
-      if(!node) {
-        return new Node(value);
+    let current = this.rootTree;
+    if (!this.rootTree) {
+      this.rootTree = new Node(data);
+    } else {
+      while (current) {
+        if (data > current.data) {
+          if (!current.right) {
+            current.right = new Node(data);
+            return;
+          }
+          current = current.right
+        } else {
+          if (!current.left) {
+            current.left = new Node(data);
+            return;
+          }
+          current= current.left;
+        }
       }
-      if (node.value === value) {
-        return node;
-      }
-      if (value < node.value) {
-        node.left = putIn(node.left, value);
-      } else {
-        node.right = putIn(node.right, value);
-      }
-      return node;
     }
-    
   }
 
   has(data) {
-    
+    let current = this.rootTree;
+    if (!this.rootTree) {
+      return false;
+    } else {
+      while (current) {
+        if (data === current.data) {
+       return true;
+        } else if (data > current.data) {
+          if (!current.right) {
+            return false;
+          }
+          current = current.right;
+        } else {
+          if(!current.left) {
+            return false
+          }
+         current = current.left;
+        }
+      }
+      return false;
+    }
   }
 
   find(data) {
-    
+    let current = this.rootTree;
+    if (!this.rootTree) {
+      return null;
+    } else {
+      while (current) {
+        if (data === current.data) {
+         return current;
+        } else if (data > current.data) {
+          if (!current.right) {
+            return null;
+          }
+          current = current.right;
+        } else {
+          if(!current.left) {
+            return null;
+          }
+         current = current.left;
+        }
+      }
+      return null;
+    }
   }
 
   remove(data) {
-    
+    if (!this.rootTree) return null;
   }
 
   min() {
-    
+    let current = this.rootTree;
+    while (current.left) {
+      current = current.left
+    }
+    return current.data
   }
 
   max() {
-    
+    let current = this.rootTree;
+    while (current.right) {
+      current = current.right
+    }
+    return current.data
   }
 }
+
+
+
 
 module.exports = {
   BinarySearchTree
